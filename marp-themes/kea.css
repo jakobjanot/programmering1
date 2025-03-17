@@ -1,0 +1,71 @@
+/* @theme kea */
+
+@import 'default';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+
+:root {
+    --text-color: #233249;
+    --bg-color-white: #fff;
+    --bg-color-dark: #233249;
+    --bg-color-red: #ea5045;
+    --bg-color-rose: #f7d4d1;
+    --bg-color-blue: #9accff;
+    --bg-color-green: #50d57c;
+    --font-family-body-text: 'Roboto', sans-serif;
+    --font-family-monospace-text: 'Roboto Mono', monospace;
+    --font-family-heading-text: 'Roboto Condensed', sans-serif;
+
+    font-family: var(--font-family-body-text);
+    font-size: 2.0em;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: var(--bg-color-white);
+    letter-spacing: 0.04em;
+}
+
+/** Add logo to the bottom of the slides */
+section::before {
+    content: url("https://kea.dk/slir/w120-c100x50/images/om-kea/presse/kea-logo-dk-web.jpg");
+    bottom: -30px;
+    left: 0px;
+    width: 100px;
+    position: absolute;
+}
+
+pre, code {
+    font-family: var(--font-family-monospace-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading-text);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-color);
+}
+
+section.invert {
+    background: var(--bg-color-dark);
+    color: var(--bg-color-white);
+}
+
+section.invert h1, section.invert h2, section.invert h3, section.invert h4, section.invert h5, section.invert h6 {
+    color: var(--bg-color-white);
+}
+
+section.lead {
+    background: var(--bg-color-red);
+}
+
+section.rose {
+    background: var(--bg-color-rose);
+}
+
+section.blue {
+    background: var(--bg-color-blue);
+}
+
+section.green {
+    background: var(--bg-color-green);
+}
