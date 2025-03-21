@@ -23,7 +23,7 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/jakobjanot/programmering1.git",
+    "url": "https://github.com/jakobjanot/prog1.git",
     "accountId": "2279307c-be19-4d24-8eba-22ac14cc296f"
   }
 }]]></component>
@@ -41,7 +41,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "/Users/janot/Courses/programmering1/src/Main.java"
+    "onboarding.tips.debug.path": "/Users/janot/Courses/prog1/src/Main.java"
   }
 }]]></component>
   <component name="RecentsManager">

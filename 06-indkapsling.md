@@ -11,12 +11,14 @@ paginate: true
 
 ### Programmering 1
 ### Lektion 6
----
 
+---
+<!-- _class: invert -->
+# Progammering 1 - lektion 6
 ...
 4. Klasser og objekter
 5. Arv og komposition
-6. Indkapsling &larr; I dag
+6. Indkapsling (I DAG)
 7. Abstrakte klasser og interfaces
 8. Polymorfi
 ...
@@ -25,13 +27,15 @@ paginate: true
 
 ---
 <!-- _class: invert -->
-# Dagens program
+# Læringsmål - i dag
 
-- Repetition af klasser og objekter
 - Hvad er indkapsling
+  - Access modifiers, `public`, `private`
+  - `get`ter og `set`ter metoder
 - Hvorfor bruge indkapsling?
-- Øvelser i grupper
-- Opsamling
+  - API
+  - Refaktorering
+- Øvelser i grupper - og diskussion
 
 ---
 <!-- _class: rose -->
@@ -42,9 +46,11 @@ paginate: true
 
 <!-- _class: rose -->
 
-## En klasse er en skabelon for objekter.
+## Repetition af klasser
 
 ```java
+package dk.kea.prog1.ex1; // src/dk/kea/prog1/ex1/SavingsAccount.java 
+
 class SavingsAccount {
   // fields
   double balance;
@@ -65,9 +71,22 @@ class SavingsAccount {
 ```
 
 <!-- 
-Tænk på en klasse som en Word brev skabelon til en invitation. Med den skabelon kan du lave mange breve.
 
-En klasse består af fields (felter) som definerer objektets tilstand (state) og metoder som definerer objektets adfærd (behavior).
+Klasser er en måde at organisere kode på. Vi kan knytte data og metoder sammen i en klasse, så vi kan anvede dem sammen.
+
+Klasser er en skabelon for objekter. Vi kan lave mange objekter af samme klasse med forskellige data.
+
+Når vi laver et objekt af klassen SavingsAccount, så laver vi en konto med en saldo og en ejer. Vi kan lave mange konti med forskellige saldi og ejere.
+
+Vi kalder det at lave et objekt af en klasse for at instansiere klassen, dvs. at lave en instans af klassen.
+
+En klasse består af 
+- fields (felter) som definerer objektets tilstand (state). Fields er variabler som gemmer data saldo'en som er et decimaltal. Da variablerne hører til objektet (instansen), kalder vi dem instansvariabler.
+- metoder som definerer objektets adfærd (behavior).
+- konstruktør (constructor) som initialiserer objekter af klassen.
+- package statement som definerer hvilken pakke klassen hører til.
+
+Vi kalder også feltene for instansvariabler, fordi de er unikke for hvert objekt af klassen.
 
 I eksemplet har vi en klasse `SavingsAccount` som er en skabelon for opsparingskonti.
 
@@ -84,27 +103,29 @@ Herefter kan vi kalde metoden `applyInterest` på objekter af klassen SavingsAcc
 
 <!-- _class: rose -->
 
-# Et objekt har en tilstand og adfærd
+# Repetiton af objekter
 
 ```java
-SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
-kimsAccount.applyInterest();
+package dk.kea.prog1.ex1; // src/dk/kea/prog1/ex1/Runner.java
 
-SavingsAccount annesAccount = new SavingsAccount(2000, "Anne");
-annesAccount.applyInterest();
-
-System.out.println(kimsAccount.balance); // => 1050
-System.out.println(annesAccount.balance); // => 2100
+class Runner {
+  public static void main(String[] args) {
+    
+    SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
+    
+    kimsAccount.applyInterest();
+    
+    System.out.println(kimsAccount.balance); // => 1050
+  }
+}
 ```
 
 <!--
-Vi initialiserer en konto til Kim med en saldo på 1000 kr. Herefter tilføjer vi 5% rente til saldoen.
-
-Klasser er en måde at organisere kode på. De hjælper os med at strukturere vores kode og gøre den mere læsbar og vedligeholdelig. Vi kan knytte data og metoder sammen i en klasse, så vi kan anvede dem sammen.
-Vi kan lave mange objekter af samme klasse og de vil have hver deres tilstand, i dette tilfælde forskellige saldi.
+Vi initialiserer en konto til Kim med en saldo på 1000 kr. Herefter tilføjer vi 5% rente til saldoen, så saldoen er 1050 kr.
 -->
 
 ---
+
 
 <!-- _class: blue -->
 
@@ -114,11 +135,52 @@ Vi kan lave mange objekter af samme klasse og de vil have hver deres tilstand, i
 
 <!-- _class: blue -->
 
+# DEMO
+
+Opsparingskonto
+
+<!--
+1. Kør programmet fra InsideRunner.java
+2. Prøv så koden i OutsideRunner.java
+3. Hvorfor virker det ikke?
+-->
+---
+
+<!-- _class: blue -->
+
+Klassen, dens felter og metoder (og constructor) har access modifiers:
+- `public`
+- `private`
+- `protected`
+- "default" (ingen access modifier)
+
+<!--
+Default access modifier (package-private) betyder at felter og metoder er tilgængelige for klasser i samme pakke.
+
+Det giver os problemer når vi tilgår SavingsAccount fra en anden pakke.
+-->
+
+---
+
+<!-- _class: blue -->
+
+# DEMO
+
+Lad os gøre det hele `public` og se hvad der sker.
+
+---
+
+<!-- _class: blue -->
+
 ## Ny adfærd: Hæve penge fra kontoen
 
 ```java
+package dk.kea.prog1;
+
 SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
+
 kimsAccount.balance = kimsAccount.balance - 1200;
+
 System.out.println(kimsAccount.balance); // => -200
 ```
 <br>
@@ -132,22 +194,90 @@ At ændre `balance` direkte er et problem fordi vi ikke kan kontrollere hvad der
 
 <!-- _class: blue -->
 
-# Demo
+# Getter og setter metoder, konventioner:
 
-<br/>
+- Konvention: `get` og `set` foran feltnavn, dvs.
+  ```java
+  public double getBalance() {
+    return balance;
+  }
+  ```
+  ```java
+  public void setBalance(double balance) {
+    this.balance = balance;
+  }
+  ```
 
-[`git clone https://github.com/jakobjanot/programmering1`](https://github.com/jakobjanot/programmering1)
+<!--
+getter og setter metoder er en god praksis.
+Det er en konvention
+
+Måske er det ikke meningen at vi skal ændre saldoen direkte med en setter metode?
+
+Logikken for at hæve/indsætte penge er en naturlig adfærd for en konto og bør derfor være en metode på klassen `SavingsAccount` og ikke noget som brugeren af klassen skal tænke på.
+-->
+
+
+<!-- _class: blue -->
+
+# DEMO
+
+Lad os lave get og set metoder for `balance`, så saldoen aldrig kan være negativ.
 
 <!--
 1. Gør `balance` o.a. felter `private`
-2. Lav en `public` `getBalance()` metode
+2. Lav en `public` getter og setter metoder for `balance` og `owner`
 -->
 
 ---
 
 <!-- _class: blue -->
 
-## Øvelse (20 min): At hæve/indsætte penge
+```java
+class SavingsAccount {
+  private double balance;
+  private double rate = 0.05;
+  private String owner;
+
+  public SavingsAccount(double balance, String owner) {
+    this.balance = balance;
+    this.owner = owner;
+  }
+
+  [...]
+
+  public double getBalance() {
+    return this.balance;
+  }
+
+  public void setBalance(double balance) {
+    if (balance < 0)
+      return;
+    
+    this.balance = balance;
+  }
+}
+```
+
+---
+
+<!-- _class: blue -->
+
+```java
+SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
+
+kimsAccount.setBalance(kimsAccount.getBalance() - 1200);
+
+System.out.println(kimsAccount.getBalance()); // => 1000
+```
+
+Er der noget vi kan gøre bedre?
+
+---
+
+<!-- _class: blue -->
+
+## Øvelse (20 min): At hæve/indsætte penge.
 
 ```java
 class SavingsAccount {
@@ -167,17 +297,12 @@ class SavingsAccount {
   public double getBalance() {
     return balance;
   }
-
-  // TODO: Tilføj ny adfærd
 }
 ```
 
 <!--
-Vi gør `balance`, `rate` og `owner` private, så de ikke kan ændres udefra. Vi tilføjer en metode `getBalance` som returnerer saldoen.
-
 Vi har nu frihed til at ændre den implementering af klassen `SavingsAccount` uden at det påvirker andre dele af programmet. Vi kan f.eks. ændre hvordan saldoen beregnes eller hvordan renten tilføjes.
 
-At trække penge er en naturlig adfærd (behavior) for en konto og burde derfor være en metode på klassen `SavingsAccount`.
 --> 
 
 ---
@@ -206,22 +331,29 @@ class SavingsAccount {
     deposit(interest);
   }
 
-  public double getBalance() {
-    return balance;
-  }
-
   public void withdraw(double amount) {
     if (amount > balance)
       return;
     
-    balance = balance - amount;
+    setBalance(balance - amount);
   }
 
   public void deposit(double amount) {
     if (amount < 0)
       return;
 
-    balance = balance + amount;
+    setBalance(balance + amount);
+  }
+
+  public double getBalance() {
+    return balance;
+  }
+
+  private void setBalance(double balance) {
+    if (balance < 0)
+      return;
+    
+    this.balance = balance;
   }
 }
 ```
@@ -232,6 +364,7 @@ class SavingsAccount {
 
 ```java
 SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
+
 kimsAccount.withdraw(1200);
 System.out.println(kimsAccount.getBalance()); // => 1000
 
@@ -249,39 +382,36 @@ System.out.println(kimsAccount.getBalance()); // => 800
 
 ---
 
-<!-- _class: green -->
-
 # Hvorfor bruge indkapsling?
 
 ---
 
-<!-- _class: green -->
-
 # API - Application Programming Interface
 
-## a.k.a. Klassens grænseflade til omverdenen
+- `public` metoder er klassens API - grænsefladen til klassens brugere
+- `private` metoder er klassens interne implementering - skjult for klassens brugere
+- Refaktorering: at ændre koden uden at ændre klassens API
 
-- `public` metoder er klassens API (eller kontrakt)
-- `private` metoder er klassens interne implementering
+<!--
+Pointe: Vi kan ændre klassens interne implementering uden at påvirke klassens brugere.
+
+At tilføje flere `private` metoder gør koden mere læsbar og vedligeholdelig, da vi kan opdele komplekse metoder i mindre dele.
+
+Refaktorering er en teknik til at forbedre koden uden at ændre klassens API.
+-->
 
 ---
-
-<!-- _class: green -->
 
 # Øvelse: Refaktorering af `SavingsAccount`
 
 - Kan vi gøre koden mere læsbar uden at ændre klassens API?
 
 ---
-
-<!-- _class: green -->
 # Diskussion af øvelse: Refaktorering af `SavingsAccount`
 
 <!-- Hvad har i gjort? -->
 
 ---
-
-<!-- _class: green -->
 
 ```java
 class SavingsAccount {
@@ -295,7 +425,7 @@ class SavingsAccount {
   }
 
   public void applyInterest() { 
-    deposit(calculateInterest());
+    deposit(calculateYearlyInterest());
   }
 
   [...]
@@ -306,36 +436,46 @@ class SavingsAccount {
 }
 ```
 
-<!-- En måde at gøre koden mere læsbar er at flytte beregningen af renten til en separat metode `calculateInterest`. -->
+<!-- En måde at gøre koden mere læsbar er at flytte beregningen af renten til en separat metode `calculateYearlyInterest`. 
+
+`calculateYearlyInterest` er et godt navn for metoden, da vi forstår at det er en årlig tilskrivning af rente
+-->
+
 ---
 
 <!-- _class: green -->
-# Gruppearbejde (2 time)
 
-## Opgave - Beregning af rente
+# Gruppearbejde (2 time) - Beregning af rente
 
-1. Implementer daglig rente
-2. Flyt implementeringen til en ny klasse til beregning af rente - API'et skal være `calculateInterest(double balance)`
-3. Refaktorer `SavingsAccount` til at bruge den nye klasse
-4. Lav en ny klasse `CheckingAccount` med samme funktionalitet som `SavingsAccount`, der tillader overtræk (negativ saldo).
-5. Implementer strafrente på overtrækket.
-6. (Valgfri) Lav en ny klasse `Bank`, der kan tilskrive renter på liste `CheckingAccount`.
+1. Implementer daglig rente i stedet for årlig rente
+2. Lav en ny klasse `CheckingAccount` med samme funktionalitet som `SavingsAccount`, der tillader overtræk (negativ saldo).
+3. Implementer strafrente på overtrækket.
+4. (Extra) Hvordan kan vi dele kode mellem `SavingsAccount` og `CheckingAccount`?
+5. (Extra) Hvad gør access modifier `protected`?
+6. (Extra) lav en `Bank`, der har funktionalitet til at tilskrive renter til flere konti.
 
 ---
 <!-- _class: green -->
+
 # Diskussion af gruppearbejde
 
 <!-- Hvad har i lavet? -->
 
 ---
 
+<!-- _class: invert -->
+
 # Opsamling - hvad har vi lært?
 
+Nævn tre ting I tager med fra i dag.
+
+<!--
 - Indkapsling er en måde at skjule data og metoder fra omverdenen
 - Indkapsling giver mere kontrol over objektets tilstand
 - `public` metoder er klassens API
 - `private` metoder er klassens interne implementering
 - Indkapsling gør koden mere læsbar og vedligeholdelig, da vi kan tilføje så mange `private` metoder som vi vil uden at påvirke klassens brugere
+-->
 
 ---
 
