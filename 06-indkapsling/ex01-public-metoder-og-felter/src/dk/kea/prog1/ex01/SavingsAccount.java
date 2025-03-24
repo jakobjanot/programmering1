@@ -1,22 +1,24 @@
 package dk.kea.prog1.ex01;
 
 public class SavingsAccount {
-    double balance;
-    double rate;
-    String owner;
+    public double balance;
+    public double rate;
+    public String owner;
 
-    SavingsAccount(double balance, String owner) {
+    public SavingsAccount(double balance, String owner) {
         this.balance = balance;
         this.owner = owner;
         this.rate = 0.05;
     }
 
-   void applyInterest() {
+   public void applyInterest() {
         this.balance = this.balance * (1 + rate);
     }
+
+    // TODO: Generate getter setter
 }
 
-/*
+/* TODO: Replace above
 class SavingsAccount {
     private double balance;
     private double rate = 0.05;

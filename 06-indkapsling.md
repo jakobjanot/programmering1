@@ -30,7 +30,7 @@ paginate: true
 # Læringsmål - i dag
 
 - Hvad er indkapsling
-  - Access modifiers, `public`, `private`
+  - `public` og `private`
   - `get`ter og `set`ter metoder
 - Hvorfor bruge indkapsling?
   - API
@@ -49,7 +49,7 @@ paginate: true
 ## Repetition af klasser
 
 ```java
-package dk.kea.prog1.ex1; // src/dk/kea/prog1/ex1/SavingsAccount.java 
+package dk.kea.prog1.ex1;
 
 class SavingsAccount {
   // fields
@@ -106,7 +106,7 @@ Herefter kan vi kalde metoden `applyInterest` på objekter af klassen SavingsAcc
 # Repetiton af objekter
 
 ```java
-package dk.kea.prog1.ex1; // src/dk/kea/prog1/ex1/Runner.java
+package dk.kea.prog1.ex1;
 
 class Runner {
   public static void main(String[] args) {
@@ -175,7 +175,7 @@ Lad os gøre det hele `public` og se hvad der sker.
 ## Ny adfærd: Hæve penge fra kontoen
 
 ```java
-package dk.kea.prog1;
+package dk.kea.prog1; // NB: Ændret pakkenavn
 
 SavingsAccount kimsAccount = new SavingsAccount(1000, "Kim");
 
@@ -194,7 +194,7 @@ At ændre `balance` direkte er et problem fordi vi ikke kan kontrollere hvad der
 
 <!-- _class: blue -->
 
-# Getter og setter metoder, konventioner:
+# `get`ter og `set`ter metoder:
 
 - Konvention: `get` og `set` foran feltnavn, dvs.
   ```java
@@ -216,7 +216,7 @@ Måske er det ikke meningen at vi skal ændre saldoen direkte med en setter meto
 
 Logikken for at hæve/indsætte penge er en naturlig adfærd for en konto og bør derfor være en metode på klassen `SavingsAccount` og ikke noget som brugeren af klassen skal tænke på.
 -->
-
+---
 
 <!-- _class: blue -->
 
